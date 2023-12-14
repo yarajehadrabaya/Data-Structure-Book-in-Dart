@@ -1,34 +1,34 @@
 import 'dart:io';
 
 void main() {
-  String testString1 = "((()))"; // Balanced parentheses
-  String testString2 = "(()))"; // Unbalanced parentheses
+  String test1 = "(((()(1)()(0))))"; // Balanced parentheses
+  String test2 = "((1))))))"; // Unbalanced parentheses
 
-  print("String: $testString1");
-  print("Balanced? ${check_balanced(testString1)}");
+  print("String: $test1");
+  print("is Balanced? ${check_balanced(test1)}");
 
-  print("\nString: $testString2");
-  print("Balanced? ${check_balanced(testString2)}");
+  print("\nString: $test2");
+  print("is Balanced? ${check_balanced(test2)}");
 }
 
 
 
 
-bool check_balanced(String str) {
-  List<String> stack = [];
+bool check_balanced(String s) {
+   List<String> stack = [];
 
-  for (int i = 0; i < str.length; i++) {
-    String char = str[i];
+   for (int i = 0; i < s.length; i++) {
+      String c = s[i];
 
-    if (char == '(') {
-      stack.add(char);
-    }
-    else if (char == ')') {
-      if (stack.isEmpty || stack.removeLast() != '(') {
-        return false;
+      if (c == '(') {
+        stack.add(c);
+      } else if (c == ')') {
+        if (stack.isEmpty) {
+          return false;
+        }
+        stack.removeLast();
       }
-    }
-  }
+   }
 
-  return stack.isEmpty;
-}
+   return stack.isEmpty;
+  }
