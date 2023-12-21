@@ -1,3 +1,12 @@
+class Stack<E> {
+ Stack() : _storage = <E>[];
+ final List<E> _storage;
+  void push(E element) => _storage.add(element);
+  E pop() => _storage.removeLast();
+  E get peek => _storage.last;
+  bool get isEmpty => _storage.isEmpty;
+  bool get isNotEmpty => !isEmpty;
+}
 
 void main() {
   List<int> myList = [1, 2, 3, 4, 5];
@@ -15,5 +24,3 @@ void printInReverse<E>(List<E> list) {
     print(stack.removeLast());
   }
 }
-
-
