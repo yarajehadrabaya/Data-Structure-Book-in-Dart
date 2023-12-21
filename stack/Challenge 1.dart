@@ -1,16 +1,18 @@
-import 'dart:io';
 
 void main() {
   List<int> myList = [1, 2, 3, 4, 5];
   print("Original list: $myList");
   print("Reversed list:");
-  reversed(myList);
+  printInReverse(myList);
 }
 
-
-void reversed(List list) {
-  for (int i = list.length - 1; i >= 0; i--) {
-    print(list[i]);
+void printInReverse<E>(List<E> list) {
+  var stack = <E>[];
+  for (E value in list) {
+    stack.add(value);
+  }
+  while (stack.isNotEmpty) {
+    print(stack.removeLast());
   }
 }
 
