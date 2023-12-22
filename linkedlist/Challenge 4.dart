@@ -33,25 +33,8 @@ class LinkedList<T> {
 
 
 
-void main() {
-  var list = LinkedList<int>();
-  list.push(3);
-  list.push(3);
-  list.push(2);
-  list.push(1);
-  list.push(1);
-
-  print("Original Linked List:");
-  print(list.head);
-  
-  print("\nLinked List after removing occurrences of value 3:");
-  list.removeAll(3);
-  print(list.head); 
-}
 
 
-
-  
 
   void removeAll(T value) {
     while (head != null && head!.value == value) {
@@ -73,5 +56,24 @@ void main() {
 
     tail = previous;
   }
+}
+
+
+
+
+void main() {
+  var list = LinkedList<int>();
+  list.push(3);
+  list.push(3);
+  list.push(2);
+  list.push(1);
+  list.push(1);
+
+  print("Original Linked List:");
+  print(list.head);
+
+  print("\nLinked List after removing occurrences of value 3:");
+  list.removeAll(3);
+  print(list.head); 
 }
 
