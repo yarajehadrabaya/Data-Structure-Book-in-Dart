@@ -1,27 +1,55 @@
-class Node {
-  dynamic data;
-  Node? next; // making next nullable by using [Node?]
+class Node<T> {
+  Node({required this.value, this.next});
+  T value;
+  Node<T>? next;
 
-  Node(this.data, {this.next}); // initializing next within the constructor.
+  @override
+  String toString() {
+    if (next == null) return '$value';
+    return '$value -> ${next.toString()}';
+  }
 }
 
-void reversed_linked(Node? head) {
-  if (head == null) {
-    return;
+class LinkedList<T> {
+  Node<T>? head;
+
+  void push(T value) {
+    var newNode = Node(value: value);
+    if (head == null) {
+      head = newNode;
+    } else {
+      var current = head;
+      while (current!.next != null) {
+        current = current.next;
+      }
+      current.next = newNode;
+    }
   }
-    reversed_linked(head.next);
-  print(head.data);
 }
 
 void main() {
-   Node node1 = Node(1);
-  Node node2 = Node(2);
-    Node node3 = Node(3);
-
-  node1.next = node2;
-  node2.next = node3;
-
-  print("Linked List:");
-   reversed_linked(node1);
+  var list = LinkedList<int>();
+  list.push(3);
+  list.push(2);
+  list.push(1);
+  print('Original list: ${list.head}');
+  print("Printing in reverse:");
+  printListReverse(list);
 }
+
+
+
+void printRecursively<T>(Node<T>? node) {
+  if (node == null) return;
+  printRecursively(node.next);
+  print(node.value);
+}
+
+void printListReverse<T>(LinkedList<T> list) {
+  printRecursively(list.head);
+}
+
+
+
+
 
