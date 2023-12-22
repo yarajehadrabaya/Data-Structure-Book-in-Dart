@@ -30,7 +30,7 @@ class LinkedList<T> {
 void main() {
   var list = LinkedList<int>();
   list.push(3);
-  list.push(2);
+  list.push(4);
   list.push(1);
   print(list.head); 
   final middleNode = getMiddle(list);
