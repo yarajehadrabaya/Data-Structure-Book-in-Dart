@@ -1,56 +1,70 @@
-class Node {
-  dynamic data;
-  Node? next;
+class Node<T> {
+  Node({required this.value, this.next});
+  T value;
+  Node<T>? next;
 
-  Node(this.data);
+  @override
+  String toString() {
+    if (next == null) return '$value';
+    return '$value -> ${next.toString()}';
+  }
 }
 
-Node? removeOccurrences(Node? head, dynamic v) {
-  while (head != null && head.data == v) {
-    head = head.next;
-  }
+class LinkedList<T> {
+  Node<T>? head;
+  Node<T>? tail;
 
-  Node? current = head;
-  while (current != null && current.next != null) {
-    if (current.next!.data == v) {
-      current.next = current.next!.next;
+  void push(T value) {
+    var newNode = Node(value: value);
+    if (head == null) {
+      head = newNode;
+      tail = newNode;
     } else {
-      current = current.next;
+      tail!.next = newNode;
+      tail = newNode;
     }
   }
 
-  return head;
-}
+  @override
+  String toString() {
+    if (head == null) return "Empty List";
+    return head.toString();
+  }
 
-void printLinkedList(Node? head) {
-  Node? temp = head;
-  while (temp != null) {
-    print(temp.data);
-    temp = temp.next;
+  void removeAll(T value) {
+    while (head != null && head!.value == value) {
+      head = head!.next;
+    }
+
+    var previous = head;
+    var current = head?.next;
+
+    while (current != null) {
+      if (current.value == value) {
+        previous!.next = current.next;
+        current = previous.next;
+        continue;
+      }
+      previous = current;
+      current = current.next;
+    }
+
+    tail = previous;
   }
 }
 
 void main() {
-  // making the linked list nodes
-  Node node1 = Node(9);
-  Node node2 = Node(2);
-  Node node3 = Node(2);
-  Node node4 = Node(5);
-  Node node5 = Node(4);
+  var list = LinkedList<int>();
+  list.push(3);
+  list.push(3);
+  list.push(2);
+  list.push(1);
+  list.push(1);
 
-  // connecting the nodes in the linked list
-  node1.next = node2;
-  node2.next = node3;
-  node3.next = node4;
-  node4.next = node5;
-
-  // printing the original linked list
   print("Original Linked List:");
-  printLinkedList(node1); 
+  print(list.head);
   
-  // removing occurrences of value 2
-  Node? modifiedList = removeOccurrences(node1, 2); 
-  print("\nLinked List after removing occurrences of value 2:");
-  printLinkedList(modifiedList); 
+  print("\nLinked List after removing occurrences of value 3:");
+  list.removeAll(3);
+  print(list.head); 
 }
-
