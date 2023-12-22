@@ -1,48 +1,60 @@
-class Node {
-  dynamic data;
-  Node? next; // Make 'next' nullable using 'Node?'
+class Node<T> {
+  Node({required this.value, this.next});
+  T value;
+  Node<T>? next;
 
-  Node(this.data);
+  @override
+  String toString() {
+    if (next == null) return '$value';
+    return '$value -> ${next.toString()}';
+  }
 }
 
-Node? reverseLinkedList(Node? head) {
-  Node? prev = null;
-  Node? current = head;
-  Node? nextNode;
+class LinkedList<T> {
+  Node<T>? head;
+  Node<T>? tail;
 
-  while (current != null) {
-    nextNode = current.next;
-    current.next = prev;
-    prev = current;
-    current = nextNode;
+  void push(T value) {
+    var newNode = Node(value: value);
+    if (head == null) {
+      head = newNode;
+      tail = newNode;
+    } else {
+      tail!.next = newNode;
+      tail = newNode;
+    }
   }
 
-  return prev;
-}
+  @override
+  String toString() {
+    if (head == null) return "Empty List";
+    return head.toString();
+  }
 
-void printLinkedList(Node? head) {
-  Node? temp = head;
-  while (temp != null) {
-    print(temp.data);
-    temp = temp.next;
+  void reverse() {
+    tail = head;
+    var previous = head;
+    var current = head?.next;
+    previous?.next = null;
+
+    while (current != null) {
+      final next = current.next;
+      current.next = previous;
+      previous = current;
+      current = next;
+    }
+    head = previous;
   }
 }
 
 void main() {
-  Node node1 = Node(105);
-  Node node2 = Node(205);
-  Node node3 = Node(305);
-  Node node4 = Node(405);
-
-  node1.next = node2;
-  node2.next = node3;
-  node3.next = node4;
-
-  print("Original Linked List:");
-  printLinkedList(node1);
-
-  Node? reversedHead = reverseLinkedList(node1);
-
-  print("\nReversed Linked List:");
-  printLinkedList(reversedHead);
+  var list = LinkedList<int>();
+  list.push(3);
+  list.push(2);
+  list.push(1);
+  print('Original list: $list');
+  list.reverse();
+  print('Reversed list: $list');
 }
+
+
