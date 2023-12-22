@@ -39,6 +39,7 @@ void main() {
 
 
 
+
 Node<E>? getMiddle<E>(LinkedList<E> list) {
  var slow = list.head;
  var fast = list.head;
