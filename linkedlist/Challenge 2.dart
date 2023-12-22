@@ -1,38 +1,50 @@
-class Node {
-  dynamic data;
-  Node? next; // making next nullable
+class Node<T> {
+  Node({required this.value, this.next});
+  T value;
+  Node<T>? next;
 
-  Node(this.data);
+  @override
+  String toString() {
+    if (next == null) return '$value';
+    return '$value -> ${next.toString()}';
+  }
 }
 
-Node middle(Node head) {
-  if (head == null) {
-    return head;
+class LinkedList<T> {
+  Node<T>? head;
+
+  void push(T value) {
+    var newNode = Node(value: value);
+    if (head == null) {
+      head = newNode;
+    } else {
+      var current = head;
+      while (current!.next != null) {
+        current = current.next;
+      }
+      current.next = newNode;
+    }
   }
-
-  Node slowPointer = head;
-  Node ? fastPointer = head;
-
-  while (fastPointer != null && fastPointer.next != null) {
-    slowPointer = slowPointer.next!;
-    fastPointer = fastPointer.next!.next;
-  }
-
-  return slowPointer;
 }
 
 void main() {
-  Node node1 = Node(1);
-  Node node2 = Node(2);
-  Node node3 = Node(9);
-  Node node4 = Node(4);
-  Node node5 = Node(50);
+  var list = LinkedList<int>();
+  list.push(3);
+  list.push(2);
+  list.push(1);
+  print(list.head); 
+  final middleNode = getMiddle(list);
+  print('Middle: ${middleNode?.value}');
+}
 
 
-  node1.next = node2;
-  node2.next = node3;
-  node3.next = node4;
 
-  Node result =  middle(node1);
-  print("Middle Node: ${result.data}");
+Node<E>? getMiddle<E>(LinkedList<E> list) {
+ var slow = list.head;
+ var fast = list.head;
+ while (fast?.next != null) {
+ fast = fast?.next?.next;
+ slow = slow?.next;
+ }
+ return slow;
 }
